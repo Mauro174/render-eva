@@ -14,4 +14,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override public Usuario insertar(Usuario u) { return repo.save(u); }
     @Override public List<Usuario> listar() { return repo.findAll(); }
+
+    @Override
+    public Usuario ListId(int id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(int id) {
+        repo.deleteById(id);
+    }
+
+    @Override
+    public void update(Usuario software) {
+        repo.save(software);
+    }
 }

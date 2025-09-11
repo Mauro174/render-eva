@@ -8,7 +8,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private int idUsuario;
 
     @Column(name = "nombre", nullable = false, length = 120)
     private String nombre;
@@ -17,19 +17,32 @@ public class Usuario {
     private String email;
 
     @Column(name = "telefono", length = 30)
-    private String telefono;
+    private int telefono;
 
     public Usuario() {}
 
-    public Usuario(Long idUsuario, String nombre, String email, String telefono) {
+    public Usuario(int idUsuario, String nombre, String email, int telefono) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
     }
 
-    public Long getIdUsuario() { return idUsuario; }
-    public void setIdUsuario(Long idUsuario) { this.idUsuario = idUsuario; }
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -37,6 +50,5 @@ public class Usuario {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+
 }
