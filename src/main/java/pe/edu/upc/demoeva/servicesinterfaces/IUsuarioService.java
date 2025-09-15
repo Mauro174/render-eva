@@ -8,5 +8,5 @@ public interface IUsuarioService {
     List<Usuario> listar();
     public Usuario ListId(int id);
     public void delete(int id);
-    public void update(Usuario software);
+    public void update(Usuario usuario);
 }

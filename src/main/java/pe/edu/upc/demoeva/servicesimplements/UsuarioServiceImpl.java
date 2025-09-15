@@ -26,7 +26,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public void update(Usuario software) {
-        repo.save(software);
+    public void update(Usuario usuario) {
+        repo.save(usuario);
     }
 }
