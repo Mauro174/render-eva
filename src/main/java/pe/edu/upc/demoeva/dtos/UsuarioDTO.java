@@ -5,15 +5,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDate;
+
 public class UsuarioDTO {
 
     private int idUsuario;
 
-    private String nombre;
+    private String rolUsuario;
 
-    private String email;
+    private String emailUsuario;
 
-    private int telefono;
+    private String passwordUsuario;
+
+    private String nombreUsuario;
+
+    private String apellidoUsuario;
+
+    private LocalDate feNacimientoUsuario;
+
+    private String condicionmedicaUsuario;
+
+    private boolean movilidadUsuario;
+
+    private LocalDate fecreacionUsuario;
 
 
     public int getIdUsuario() {
@@ -24,27 +38,75 @@ public class UsuarioDTO {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRolUsuario() {
+        return rolUsuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRolUsuario(String rolUsuario) {
+        this.rolUsuario = rolUsuario;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailUsuario() {
+        return emailUsuario;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
     }
 
-    public int getTelefono() {
-        return telefono;
+    public String getPasswordUsuario() {
+        return passwordUsuario;
     }
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
+    public void setPasswordUsuario(String passwordUsuario) {
+        this.passwordUsuario = passwordUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getApellidoUsuario() {
+        return apellidoUsuario;
+    }
+
+    public void setApellidoUsuario(String apellidoUsuario) {
+        this.apellidoUsuario = apellidoUsuario;
+    }
+
+    public LocalDate getFeNacimientoUsuario() {
+        return feNacimientoUsuario;
+    }
+
+    public void setFeNacimientoUsuario(LocalDate feNacimientoUsuario) {
+        this.feNacimientoUsuario = feNacimientoUsuario;
+    }
+
+    public String getCondicionmedicaUsuario() {
+        return condicionmedicaUsuario;
+    }
+
+    public void setCondicionmedicaUsuario(String condicionmedicaUsuario) {
+        this.condicionmedicaUsuario = condicionmedicaUsuario;
+    }
+
+    public boolean isMovilidadUsuario() {
+        return movilidadUsuario;
+    }
+
+    public void setMovilidadUsuario(boolean movilidadUsuario) {
+        this.movilidadUsuario = movilidadUsuario;
+    }
+
+    public LocalDate getFecreacionUsuario() {
+        return fecreacionUsuario;
+    }
+
+    public void setFecreacionUsuario(LocalDate fecreacionUsuario) {
+        this.fecreacionUsuario = fecreacionUsuario;
     }
 }
