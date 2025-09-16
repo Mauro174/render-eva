@@ -32,13 +32,13 @@ public class Usuario {
     @Column(name = "feNacimientoUsuario", nullable = false)
     private LocalDate feNacimientoUsuario;
 
-    @Column(name = "condicionmedicaUsuario", nullable = false, length = 100)
+    @Column(name = "condicionmedicaUsuario", length = 100)
     private String condicionmedicaUsuario;
 
     @Column(name = "movilidadUsuario", nullable = false)
     private boolean movilidadUsuario;
 
-    @Column(name = "personalizadoUsuario", nullable = false, length = 100)
+    @Column(name = "personalizadoUsuario", length = 100)
     private String personalizadoUsuario;
 
     @Column(name = "volumenUsuario", nullable = false)
@@ -53,7 +53,7 @@ public class Usuario {
     private LocalDate feactualizacionUsuario;
 
     //aqui falta modificarlo por el FK
-    @Column(name = "Integracionesid", nullable = false)
+    @Column(name = "Integracionesid")
     private int integracionesid;
 
 
