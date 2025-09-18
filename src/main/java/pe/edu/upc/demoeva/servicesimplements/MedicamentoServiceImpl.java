@@ -1,4 +1,16 @@
 package pe.edu.upc.demoeva.servicesimplements;
 
-public class MedicamentoServiceImpl {
+import org.springframework.stereotype.Service;
+import pe.edu.upc.demoeva.entities.Medicamento;
+import pe.edu.upc.demoeva.repositories.MedicamentoRepository;
+import pe.edu.upc.demoeva.servicesinterfaces.IMedicamentoService;
+
+import java.util.List;
+
+@Service
+public class MedicamentoServiceImpl implements IMedicamentoService {
+    private final MedicamentoRepository repo;
+    public MedicamentoServiceImpl(MedicamentoRepository repo) { this.repo = repo; }
+    @Override public Medicamento guardar(Medicamento m) { return repo.save(m); }
+    @Override public List<Medicamento> listar() { return repo.findAll(); }
 }
