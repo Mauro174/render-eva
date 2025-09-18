@@ -11,6 +11,6 @@ import java.util.List;
 public class ConversacionServiceImpl implements IConversacionService {
     private final ConversacionRepository repo;
     public ConversacionServiceImpl(ConversacionRepository repo) { this.repo = repo; }
-    @Override public Conversacion guardar(Conversacion c) { return repo.save(c); }
-    @Override public List<Conversacion> listar() { return repo.findAll(); }
+    public Conversacion guardar(Conversacion c) { return repo.save(c); }
+    public List<Conversacion> listar() { return repo.findAll(); }
 }

@@ -40,10 +40,10 @@ public class ConversacionController {
         ModelMapper m = new ModelMapper();
         Conversacion ent = m.map(dto, Conversacion.class);
 
-        if (dto.getUsuarioId() == null) throw new RuntimeException("usuarioId es requerido");
-        Usuario u = usuarioRepo.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no existe"));
-        ent.setUsuario(u);
+        //if (dto.getUsuarioId() == null) throw new RuntimeException("usuarioId es requerido");
+        //Usuario u = usuarioRepo.findById(Integer.parseInt(getUsuarioId()))
+          //      .orElseThrow(() -> new RuntimeException("Usuario no existe"));
+        //ent.setUsuario(u);
 
         service.guardar(ent);
     }

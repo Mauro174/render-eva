@@ -29,7 +29,7 @@ public class MedicamentoController {
         return service.listar().stream().map(ent -> {
             ModelMapper m = new ModelMapper();
             MedicamentoDTOList dto = m.map(ent, MedicamentoDTOList.class);
-            if (ent.getUsuario() != null) dto.setUsuarioId(ent.getUsuario().getIdUsuario());
+            //if (ent.getUsuario() != null) dto.setUsuarioId(ent.getUsuario().getIdUsuario());
             return dto;
         }).collect(Collectors.toList());
     }
@@ -40,10 +40,10 @@ public class MedicamentoController {
         ModelMapper m = new ModelMapper();
         Medicamento ent = m.map(dto, Medicamento.class);
 
-        if (dto.getUsuarioId() == null) throw new RuntimeException("usuarioId es requerido");
-        Usuario u = usuarioRepo.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no existe"));
-        ent.setUsuario(u);
+       // if (dto.getUsuarioId() == null) throw new RuntimeException("usuarioId es requerido");
+        //Usuario u = usuarioRepo.findById(dto.getUsuarioId())
+        //        .orElseThrow(() -> new RuntimeException("Usuario no existe"));
+        //ent.setUsuario(u);
 
         service.guardar(ent);
     }
