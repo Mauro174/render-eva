@@ -4,12 +4,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.demoeva.dtos.UsuarioDTO;
 import pe.edu.upc.demoeva.entities.Usuario;
 import pe.edu.upc.demoeva.servicesinterfaces.IUsuarioService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -23,6 +25,7 @@ public class UsuarioController {
     public Usuario insertar(@RequestBody Usuario u) { return service.insertar(u); }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<Usuario> listar() { return service.listar(); }
 
     @GetMapping("/{id}")
@@ -71,4 +74,23 @@ public class UsuarioController {
         service.update(s);
         return ResponseEntity.ok("Registro con ID " + s.getIdUsuario() + " modificado correctamente.");
     }
+
+    @GetMapping("/pruebas")
+    public ResponseEntity<?> buscar(@RequestParam String emailUsuario) {
+        List<Usuario> usuarios = service.buscarUsuario(emailUsuario);
+
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontraron usuarios con correo: " + emailUsuario);
+        }
+
+        List<UsuarioDTO> listaDTO = usuarios.stream().map(x -> {
+            ModelMapper m = new ModelMapper();
+            return m.map(x, UsuarioDTO.class);
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(listaDTO);
+    }
+
+
 }
