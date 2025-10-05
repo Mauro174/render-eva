@@ -9,4 +9,6 @@ public interface IUsuarioService {
     public Usuario ListId(int id);
     public void delete(int id);
     public void update(Usuario usuario);
+    public List<Usuario> buscarUsuario(String eUsuario);
+
 }

@@ -1,4 +1,6 @@
 package pe.edu.upc.demoeva.repositories;
 
-public interface ConversacionRepository {
-}
+import org.springframework.data.jpa.repository.JpaRepository;
+import pe.edu.upc.demoeva.entities.Conversacion;
+
+public interface ConversacionRepository extends JpaRepository<Conversacion, Long> { }

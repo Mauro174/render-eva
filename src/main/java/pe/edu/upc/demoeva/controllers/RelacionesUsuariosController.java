@@ -4,33 +4,32 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.demoeva.dtos.RelacionesUsuariosDTO;
 import pe.edu.upc.demoeva.dtos.UsuarioDTO;
-import pe.edu.upc.demoeva.entities.Usuario;
-import pe.edu.upc.demoeva.servicesinterfaces.IUsuarioService;
+import pe.edu.upc.demoeva.entities.RelacionesUsuarios;
+import pe.edu.upc.demoeva.servicesinterfaces.IRelacionesUsuariosService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/usuarios")
-public class UsuarioController {
+@RequestMapping("/RelacionesUsuarios")
+public class RelacionesUsuariosController {
+
     @Autowired
-    private IUsuarioService service;
-    //public UsuarioController(IUsuarioService service) { this.service = service; }
+    private IRelacionesUsuariosService iRelacionesUsuariosService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Usuario insertar(@RequestBody Usuario u) { return service.insertar(u); }
+    public RelacionesUsuarios insertar(@RequestBody RelacionesUsuarios u) {
+        return iRelacionesUsuariosService.insert(u);
+    }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<Usuario> listar() { return service.listar(); }
+    public List<RelacionesUsuarios> listar() { return iRelacionesUsuariosService.list(); }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> listarId(@PathVariable("id") Integer id) {
-        Usuario soft = service.ListId(id);
+        RelacionesUsuarios soft = iRelacionesUsuariosService.ListId(id);
         if (soft == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
@@ -43,19 +42,19 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable("id") Integer id) {
-        Usuario s = service.ListId(id);
+        RelacionesUsuarios s = iRelacionesUsuariosService.ListId(id);
         if (s == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No existe un registro con el ID: " + id);
         }
-        service.delete(id);
+        iRelacionesUsuariosService.delete(id);
         return ResponseEntity.ok("Registro con ID " + id + " eliminado correctamente.");
     }
 
     @PutMapping
     public ResponseEntity<String> modificar(@RequestBody UsuarioDTO dto) {
         ModelMapper m = new ModelMapper();
-        Usuario s = m.map(dto, Usuario.class);
+        RelacionesUsuarios s = m.map(dto, RelacionesUsuarios.class);
 
         // Validación de fecha
         //if (s.getPurchaseDate().isAfter(LocalDate.now())) {
@@ -64,33 +63,18 @@ public class UsuarioController {
         //}
 
         // Validación de existencia
-        Usuario existente = service.ListId(s.getIdUsuario());
+        RelacionesUsuarios existente = iRelacionesUsuariosService.ListId(s.getIdRelacion());
         if (existente == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se puede modificar. No existe un registro con el ID: " + s.getIdUsuario());
+                    .body("No se puede modificar. No existe un registro con el ID: " + s.getIdRelacion());
         }
 
         // Actualización si pasa validaciones
-        service.update(s);
-        return ResponseEntity.ok("Registro con ID " + s.getIdUsuario() + " modificado correctamente.");
+        iRelacionesUsuariosService.update(s);
+        return ResponseEntity.ok("Registro con ID " + s.getIdRelacion() + " modificado correctamente.");
     }
 
-    @GetMapping("/pruebas")
-    public ResponseEntity<?> buscar(@RequestParam String emailUsuario) {
-        List<Usuario> usuarios = service.buscarUsuario(emailUsuario);
 
-        if (usuarios.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se encontraron usuarios con correo: " + emailUsuario);
-        }
-
-        List<UsuarioDTO> listaDTO = usuarios.stream().map(x -> {
-            ModelMapper m = new ModelMapper();
-            return m.map(x, UsuarioDTO.class);
-        }).collect(Collectors.toList());
-
-        return ResponseEntity.ok(listaDTO);
-    }
 
 
 }
