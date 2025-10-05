@@ -1,10 +1,12 @@
 package pe.edu.upc.demoeva.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,9 +17,10 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Rol> roles;
+    private List<Rol> roles = new ArrayList<>();
 
     @Column(name = "emailUsuario", nullable = false, unique = true, length = 80)
     private String emailUsuario;
@@ -59,6 +62,7 @@ public class Usuario {
     private Integer integracionesid;
 
     private Boolean enabled;
+
 
     public Boolean getEnabled() {
         return enabled;
