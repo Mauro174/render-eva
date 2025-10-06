@@ -8,4 +8,5 @@ public interface IMedicamentoService {
     public List<Medicamento> listar();
     public void update(Medicamento m);
     public void delete(Long id);
+    public List<String[]> TratamientoCompleto();
 }

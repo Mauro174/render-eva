@@ -8,4 +8,5 @@ public interface FotoService {
     public List<Fotos> listar();
     public void update(Fotos f);
     public void delete(Long id);
+    public List<String[]> MasFotos();
 }

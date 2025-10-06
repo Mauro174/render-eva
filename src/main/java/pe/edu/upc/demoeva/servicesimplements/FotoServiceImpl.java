@@ -29,4 +29,9 @@ public class FotoServiceImpl implements FotoService {
     public void delete(Long id) {
         fR.deleteById(id);
     }
+
+    @Override
+    public List<String[]> MasFotos() {
+        return fR.MasFotos();
+    }
 }

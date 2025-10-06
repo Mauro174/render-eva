@@ -3,12 +3,13 @@ package pe.edu.upc.demoeva.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upc.demoeva.dtos.CantidadFotosDTO;
 import pe.edu.upc.demoeva.dtos.FotosDTO;
 import pe.edu.upc.demoeva.entities.Fotos;
 import pe.edu.upc.demoeva.servicesinterfaces.FotoService;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.LongFunction;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,5 +43,18 @@ public class FotosController {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable("id") Long id) {
         fS.delete(id);
+    }
+
+    @GetMapping("/mayorfotos")
+    public List<CantidadFotosDTO> mayorfotos() {
+        List<CantidadFotosDTO> dtoList = new ArrayList<>();
+        List<String[]> filaList = fS.MasFotos();
+        for(String[] columna:filaList){
+            CantidadFotosDTO dto2 = new CantidadFotosDTO();
+            dto2.setUsuario(columna[0]);
+            dto2.setCantidad(Integer.parseInt(columna[1]));
+            dtoList.add(dto2);
+        }
+        return dtoList;
     }
 }

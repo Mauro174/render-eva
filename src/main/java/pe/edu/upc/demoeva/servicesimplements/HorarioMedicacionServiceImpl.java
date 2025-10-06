@@ -14,7 +14,7 @@ public class HorarioMedicacionServiceImpl implements HorarioMedicacionService {
     private HorariosMedicacionRepository hmR;
 
     @Override
-    public HorariosMedicacion insertar(HorariosMedicacion hm) {
+    public void insertar(HorariosMedicacion hm) {
         hmR.save(hm);
     }
 

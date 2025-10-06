@@ -23,4 +23,9 @@ public class MedicamentoServiceImpl implements IMedicamentoService {
     public void delete(Long id) {
         repo.deleteById(id);
     }
+
+    @Override
+    public List<String[]> TratamientoCompleto() {
+        return repo.TratamientoCompleto();
+    }
 }
