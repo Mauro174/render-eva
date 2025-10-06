@@ -115,6 +115,7 @@
 
     <build>
         <plugins>
+            <!-- Plugin compiler que ya tenías -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -127,7 +128,25 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
+            <!-- Spring Boot plugin: repackage crea el "fat jar" con Main-Class -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!-- opcional: si tu clase main es otra, cámbiala -->
+                <configuration>
+                    <mainClass>pe.edu.upc.demoeva.DemoEvaApplication</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>
 
