@@ -11,4 +11,8 @@ public interface IRelacionesUsuariosService {
     public RelacionesUsuarios ListId(int id);
     public void delete(int id);
     public void update(RelacionesUsuarios relacionesUsuarios);
+    public List<RelacionesUsuarios> buscarRelaciones(String nombre, String apellido);
+    public List<String[]> cantidadUsuariosSinFamiliares();
+    public List<String[]> cantidadRelacionesPorMovilidad();
+
 }

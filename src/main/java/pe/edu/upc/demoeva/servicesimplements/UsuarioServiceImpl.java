@@ -36,5 +36,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
         return repo.buscar(eUsuario);
     }
 
+    @Override
+    public List<String[]> cantidadDeRelaciones() {
+        return repo.cantidadRelaciones();
+    }
+
+    @Override
+    public List<String[]> cantidadDeMedicamentos() {
+        return repo.cantidadMedicamentos();
+    }
+
 
 }

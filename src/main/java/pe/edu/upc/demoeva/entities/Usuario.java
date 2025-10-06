@@ -175,7 +175,7 @@ public class Usuario {
         this.feactualizacionUsuario = feactualizacionUsuario;
     }
 
-    public int getIntegracionesid() {
+    public Integer getIntegracionesid() {
         return integracionesid;
     }
 

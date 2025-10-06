@@ -34,4 +34,19 @@ public class RelacionesUsuariosServiceImpl implements IRelacionesUsuariosService
     public void update(RelacionesUsuarios relacionesUsuarios) {
         repo.save(relacionesUsuarios);
     }
+
+    @Override
+    public List<RelacionesUsuarios> buscarRelaciones(String nombre, String apellido) {
+       return repo.buscar(nombre, apellido);
+    }
+
+    @Override
+    public List<String[]> cantidadUsuariosSinFamiliares() {
+        return repo.cantidadUsuariosSinFamiliares();
+    }
+
+    @Override
+    public List<String[]> cantidadRelacionesPorMovilidad() {
+        return repo.cantidadRelacionesPorMovilidad();
+    }
 }

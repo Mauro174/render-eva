@@ -1,13 +1,12 @@
 package pe.edu.upc.demoeva.dtos;
 
-public class RelacionesUsuariosDTO {
+public class ObtenerRelacionesporUsuarioDTO {
+
     private int idRelacion;
 
     private String tipoRelacion;
 
     private String parentescoRelacion;
-
-    private UsuarioDTO usuario;
 
     private UsuarioDTO relacionado;
 
@@ -33,14 +32,6 @@ public class RelacionesUsuariosDTO {
 
     public void setParentescoRelacion(String parentescoRelacion) {
         this.parentescoRelacion = parentescoRelacion;
-    }
-
-    public UsuarioDTO getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
     }
 
     public UsuarioDTO getRelacionado() {
