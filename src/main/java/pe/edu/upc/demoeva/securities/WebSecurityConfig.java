@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,9 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-
-//@Profile(value = {"development", "production"})
-//Clase S7
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -56,19 +53,44 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        //Desde Spring Boot 3.1+
-        httpSecurity
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                // API stateless con JWT
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req
-                        .requestMatchers("/login").permitAll()
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Autorización de rutas
+                .authorizeHttpRequests(auth -> auth
+                        // Rutas públicas (ajusta según tu proyecto)
+                        .requestMatchers(
+                                "/", "/error",
+                                "/login", "/auth/**",
+                                "/ping",                // opcional
+                                "/actuator/health"     // opcional si usas actuator
+                        ).permitAll()
+
+                        // Swagger / OpenAPI públicos
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-resources/**"
+                        ).permitAll()
+
+                        // Todo lo demás requiere JWT válido
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
+
+                // Sin Basic ni form login: todo por JWT
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .sessionManagement(Customizer.withDefaults());
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        return httpSecurity.build();
+
+                // Manejo de errores de autenticación con tu entrypoint
+                .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint));
+
+        // Filtro JWT antes de UsernamePasswordAuthenticationFilter
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 }
