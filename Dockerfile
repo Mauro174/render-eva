@@ -1,9 +1,16 @@
-FROM amazoncorretto:24-alpine-jdk
+# Etapa de build: compila SIEMPRE el jar fresco con tu application.properties
+FROM maven:3.9.9-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn -q -DskipTests dependency:go-offline
+COPY src ./src
+RUN mvn -q -DskipTests package
 
-COPY target/demo-EVA-0.0.1-SNAPSHOT.jar /api-v1.jar
+# Etapa de runtime: imagen liviana con JRE 21
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*-SNAPSHOT.jar /app/api-v1.jar
 
-# Activa el perfil prod y usa el puerto dinámico de Render
-ENV SPRING_PROFILES_ACTIVE=prod
-ENV SERVER_PORT=$PORT
-
-ENTRYPOINT ["java","-jar","/api-v1.jar"]
+# Render asigna el puerto en runtime; no lo seteamos aquí
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app/api-v1.jar"]
